@@ -1,6 +1,7 @@
+
+  "dependencies": 
 {
-  "dependencies": {
-  "express": "4.16.0",  // Vulnerable version
+  "express": "4.16.0",
   "event-stream": "3.3.6"
 }
-}
+
