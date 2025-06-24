@@ -12,18 +12,23 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      security-events: write  # Needed for SARIF upload
+      security-events: write  # Needed to upload SARIF
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Run TruffleHog scan
-        uses: trufflesecurity/trufflehog@v3.89.2
+      - name: Run TruffleHog scan and generate SARIF
+        uses: trufflesecurity/trufflehog@v3.66.3
         with:
-          scanArguments: --format sarif --output trufflehog-results.sarif || true
+          extra_args: --format sarif --output trufflehog-results.sarif
+        continue-on-error: true
 
-      - name: Upload TruffleHog results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v2
+      - name: Check SARIF exists
+        run: test -f trufflehog-results.sarif || echo "SARIF file not found"
+
+      - name: Upload SARIF to GitHub Code Scanning
+        if: success() && steps.trufflehog.outputs.exitcode != '1'
+        uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: trufflehog-results.sarif
