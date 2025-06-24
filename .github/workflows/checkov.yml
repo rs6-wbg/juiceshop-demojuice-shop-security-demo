@@ -1,0 +1,16 @@
+name: Checkov IaC Scan
+
+on:
+  push:
+    branches: [main]
+
+jobs:
+  checkov-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run Checkov scan
+        uses: bridgecrewio/checkov-action@master
+        with:
+          directory: './infra'  # path to IaC files
