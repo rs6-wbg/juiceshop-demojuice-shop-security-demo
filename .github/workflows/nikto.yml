@@ -1,0 +1,22 @@
+name: Nikto Scan
+
+on:
+  workflow_dispatch:
+
+jobs:
+  nikto-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Start Juice Shop container
+        run: |
+          docker run -d -p 3000:3000 --name juice-shop bkimminich/juice-shop:latest
+          sleep 30
+
+      - name: Install Nikto
+        run: sudo apt-get update && sudo apt-get install -y nikto
+
+      - name: Run Nikto Scan
+        run: nikto -h http://localhost:3000
+
+      - name: Stop Juice Shop container
+        run: docker stop juice-shop && docker rm juice-shop
