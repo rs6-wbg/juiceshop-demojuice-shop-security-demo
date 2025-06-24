@@ -19,7 +19,7 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Run TruffleHog scan and generate SARIF
-        uses: trufflesecurity/trufflehog@v3.66.3
+        uses: trufflesecurity/trufflehog@v3.89.2
         with:
           extra_args: --format sarif --output trufflehog-results.sarif
         continue-on-error: true
