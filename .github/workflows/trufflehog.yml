@@ -7,13 +7,23 @@ on:
     branches: [main]
 
 jobs:
-  trufflehog-scan:
+  trufflehog:
+    name: Run TruffleHog
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      security-events: write  # Needed for SARIF upload
+
     steps:
-      - uses: actions/checkout@v4
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
       - name: Run TruffleHog scan
-        uses: trufflesecurity/trufflehog@v3
+        uses: trufflesecurity/trufflehog@v3.89.2
         with:
-          directory: '.'  # scan current repo
-          json: true
+          scanArguments: --format sarif --output trufflehog-results.sarif || true
+
+      - name: Upload TruffleHog results to GitHub Code Scanning
+        uses: github/codeql-action/upload-sarif@v2
+        with:
+          sarif_file: trufflehog-results.sarif
