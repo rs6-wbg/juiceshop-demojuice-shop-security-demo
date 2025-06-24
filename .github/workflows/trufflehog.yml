@@ -1,0 +1,19 @@
+name: TruffleHog Secret Scan
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  trufflehog-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Run TruffleHog scan
+        uses: trufflesecurity/trufflehog@v3
+        with:
+          directory: '.'  # scan current repo
+          json: true
