@@ -3,7 +3,7 @@
 {
   "express": "4.16.0",
   "event-stream": "3.3.4"
-}
+},
   "scripts": {
   "sbom": "cyclonedx-npm --output-file sbom.json"
 }
