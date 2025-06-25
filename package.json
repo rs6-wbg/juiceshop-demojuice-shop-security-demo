@@ -1,7 +1,7 @@
 {
   "dependencies": 
 {
-  "express": "4.16.0",
+  "express": "5.1.0",
   "event-stream": "3.3.4"
 },
   "scripts": {
