@@ -15,6 +15,10 @@ jobs:
           docker run -d -p 3000:3000 --name juice-shop bkimminich/juice-shop:latest
           sleep 30  # wait for app to be ready
 
+      - name: Docker login (if needed)
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
+
+
       - name: Run OWASP ZAP baseline scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
