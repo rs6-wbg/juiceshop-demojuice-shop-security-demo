@@ -20,7 +20,7 @@ jobs:
         with:
           target: 'http://localhost:3000'
           fail_action: true  
-          docker_name: 'owasp/zap2docker-stable'  
+          docker_name: 'ghcr.io/zaproxy/zap-stable'  
 
       - name: Stop Juice Shop container
         run: docker stop juice-shop && docker rm juice-shop
