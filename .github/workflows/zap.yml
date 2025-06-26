@@ -6,6 +6,7 @@ on:
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -13,23 +14,17 @@ jobs:
       - name: Start Juice Shop container
         run: |
           docker run -d -p 3000:3000 --name juice-shop bkimminich/juice-shop:latest
-          sleep 30  # wait for app to be ready
+          sleep 30
 
-      # Optional: Authenticate with Docker Hub to avoid pull limits (recommended)
-      - name: Docker login to Docker Hub
-        if: env.DOCKER_USERNAME != '' && env.DOCKER_PASSWORD != ''
-        env:
-          DOCKER_USERNAME: ${{ secrets.DOCKER_USERNAME }}
-          DOCKER_PASSWORD: ${{ secrets.DOCKER_PASSWORD }}
-        run: echo "${DOCKER_PASSWORD}" | docker login -u "${DOCKER_USERNAME}" --password-stdin
+      - name: Docker login to GitHub Container Registry (GHCR)
+        run: echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u "${{ secrets.GHCR_USER }}" --password-stdin
 
-
-      - name: Run OWASP ZAP baseline scan
+      - name: Run OWASP ZAP Baseline Scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'http://localhost:3000'
-          docker_name: 'owasp/zap2docker-stable'
-          fail_action: true  # replaces the invalid `failOnError`
+          docker_name: 'ghcr.io/zaproxy/zap-stable'
+          fail_action: true  # This is the correct flag, not failOnError
 
       - name: Stop Juice Shop container
         run: docker stop juice-shop && docker rm juice-shop
