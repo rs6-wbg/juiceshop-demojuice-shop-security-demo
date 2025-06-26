@@ -6,7 +6,6 @@ on:
 jobs:
   zap-scan:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
@@ -14,14 +13,19 @@ jobs:
       - name: Start Juice Shop container
         run: |
           docker run -d -p 3000:3000 --name juice-shop bkimminich/juice-shop:latest
-          sleep 30
+          sleep 30  # wait for app to be ready
+
+      # Optional: Authenticate with Docker Hub to avoid pull limits (recommended)
+      - name: Docker login to Docker Hub
+        if: secrets.DOCKER_USERNAME != '' && secrets.DOCKER_PASSWORD != ''
+        run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin
 
       - name: Run OWASP ZAP baseline scan
         uses: zaproxy/action-baseline@v0.7.0
         with:
           target: 'http://localhost:3000'
-          fail_action: true
-          docker_name: 'ghcr.io/zaproxy/zap-stable'
+          docker_name: 'owasp/zap2docker-stable'
+          fail_action: true  # replaces the invalid `failOnError`
 
       - name: Stop Juice Shop container
         run: docker stop juice-shop && docker rm juice-shop
