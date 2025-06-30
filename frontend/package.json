@@ -54,7 +54,7 @@
     "ngx-highlightjs": "^6.1.2",
     "ngx-window-token": "^6.0.0",
     "ngy-cookie": "^6.0.0",
-    "rxjs": "7.8.1",
+    "rxjs": "7.8.2",
     "sass": "^1.86.3",
     "snarkdown": "^1.2.2",
     "socket.io-client": "^3.1.0",
