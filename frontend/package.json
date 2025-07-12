@@ -46,7 +46,7 @@
     "font-mfizz": "^2.4.1",
     "jwt-decode": "^2.2.0",
     "lodash-es": "^4.17.21",
-    "material-icons": "^0.3.1",
+    "material-icons": "^0.7.7",
     "ng-gallery": "^11.0.0",
     "ng-qrcode": "^18.0.0",
     "ng2-file-upload": "^7.0.1",
