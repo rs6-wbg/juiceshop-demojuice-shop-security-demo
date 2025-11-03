@@ -85,7 +85,7 @@ jobs:
         run: npm install
       - name: "Execute unit tests"
         if: github.repository == 'juice-shop/juice-shop' || (github.repository != 'juice-shop/juice-shop' && matrix.os == 'ubuntu-latest' && matrix.node-version == '22')
-        uses: nick-invision/retry@7152eba30c6575329ac0576536151aca5a72780e #v3.0.0
+        uses: nick-invision/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
           timeout_minutes: 15
           max_attempts: 3
@@ -122,7 +122,7 @@ jobs:
         run: npm install
       - name: "Execute integration tests"
         if: github.repository == 'juice-shop/juice-shop' || (github.repository != 'juice-shop/juice-shop' && matrix.os == 'ubuntu-latest' && matrix.node-version == '22')
-        uses: nick-invision/retry@7152eba30c6575329ac0576536151aca5a72780e #v3.0.0
+        uses: nick-invision/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         env:
           NODE_ENV: test
         with:
@@ -179,7 +179,7 @@ jobs:
         if: github.repository == 'juice-shop/juice-shop' || (github.repository != 'juice-shop/juice-shop' && matrix.os == 'ubuntu-latest' && matrix.node-version == '22')
         run: npm install
       - name: "Execute server tests for each custom configuration"
-        uses: nick-invision/retry@7152eba30c6575329ac0576536151aca5a72780e #v3.0.0
+        uses: nick-invision/retry@ce71cc2ab81d554ebbe88c79ab5975992d79ba08 #v3.0.2
         with:
           timeout_minutes: 30
           max_attempts: 3
