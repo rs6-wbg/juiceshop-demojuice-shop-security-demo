@@ -2,7 +2,7 @@
   "dependencies": 
 {
   "express": "4.16.0",
-  "event-stream": "3.3.4"
+  "event-stream": "4.0.1"
 },
   "scripts": {
   "sbom": "cyclonedx-npm --output-file sbom.json"
